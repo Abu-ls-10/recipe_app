@@ -7,6 +7,6 @@ export default defineSchema({
     ingredients: v.string(),        
     instructions: v.string(),       
     rating: v.number(),             
-    imageUrl: v.optional(v.string()) 
+    imageUrl: v.optional(v.union(v.id("_storage"), v.null()))
   }),
 });

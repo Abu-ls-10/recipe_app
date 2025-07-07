@@ -8,7 +8,8 @@ export const createRecipe = mutation({
     ingredients: v.string(),
     instructions: v.string(),
     rating: v.number(),
-    imageUrl: v.optional(v.id("_storage")),
+    imageUrl: v.optional(v.union(v.id("_storage"), v.null()))
+
   },
   handler: async (ctx, args) => {
     await ctx.db.insert("recipes", args);
