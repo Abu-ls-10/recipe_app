@@ -26,14 +26,14 @@ export default function RecipeForm({ defaultValues }: RecipeFormProps) {
   const [instructions, setInstructions] = useState(defaultValues?.instructions || '');
   const [rating, setRating] = useState(defaultValues?.rating || 1);
   const [imageFile, setImageFile] = useState<File | null>(null);
-  const [imageUrl] = useState(defaultValues?.imageUrl || '');
+  const [] = useState(defaultValues?.imageUrl || '');
 
   const createRecipe = useMutation(api.recipes.createRecipe);
   const updateRecipe = useMutation(api.recipes.updateRecipe);
   const generateUploadUrl = useMutation(api.files.generateUploadUrl);
 
   const handleImageUpload = async () => {
-    if (!imageFile) return imageUrl;
+    if (!imageFile) return defaultValues?.imageUrl ?? null;
     const uploadUrl = await generateUploadUrl();
     const res = await fetch(uploadUrl, {
       method: 'POST',
