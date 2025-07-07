@@ -3,19 +3,20 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { Id } from '../../convex/_generated/dataModel';
 // import Image from 'next/image';
 
 
 interface RecipeCardProps {
   recipe: {
-    _id: string;
+    _id: Id<"recipes">;
     title: string;
     ingredients: string;
     instructions: string;
-    imageUrl?: string;
+    imageUrl?: string | null;
     rating: number;
   };
-  onDelete: (id: string) => void;
+  onDelete: (id: Id<"recipes">) => void;
 }
 
 export default function RecipeCard({ recipe, onDelete }: RecipeCardProps) {
@@ -26,7 +27,7 @@ export default function RecipeCard({ recipe, onDelete }: RecipeCardProps) {
     >
       <h2 className="text-2xl font-bold text-[color:var(--color-accent)] mb-3">{recipe.title}</h2>
 
-      {recipe.imageUrl && (
+      {recipe.imageUrl ? (
         <img
           src={recipe.imageUrl}
           alt={recipe.title}
@@ -34,6 +35,10 @@ export default function RecipeCard({ recipe, onDelete }: RecipeCardProps) {
           height="300"
           width="auto"
         />
+      ) : (
+        <div className="w-full h-48 bg-gray-800 text-gray-500 flex items-center justify-center rounded-md">
+          No Image
+        </div>
       )}
 
       <p className="text-sm text-[color:var(--color-text)] text-opacity-80 mb-2">

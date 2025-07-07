@@ -6,10 +6,11 @@ import { useMutation } from 'convex/react';
 import { api } from '../../convex/_generated/api';
 import { toast } from 'sonner';
 import { motion } from 'framer-motion';
+import { Id } from '../../convex/_generated/dataModel';
 
 interface RecipeFormProps {
   defaultValues?: {
-    id?: string;
+    id: Id<"recipes">;
     title: string;
     ingredients: string;
     instructions: string;
@@ -19,13 +20,13 @@ interface RecipeFormProps {
   onSuccess?: () => void;
 }
 
-export default function RecipeForm({ defaultValues, onSuccess }: RecipeFormProps) {
+export default function RecipeForm({ defaultValues }: RecipeFormProps) {
   const [title, setTitle] = useState(defaultValues?.title || '');
   const [ingredients, setIngredients] = useState(defaultValues?.ingredients || '');
   const [instructions, setInstructions] = useState(defaultValues?.instructions || '');
   const [rating, setRating] = useState(defaultValues?.rating || 1);
   const [imageFile, setImageFile] = useState<File | null>(null);
-  const [imageUrl, setImageUrl] = useState(defaultValues?.imageUrl || '');
+  const [imageUrl] = useState(defaultValues?.imageUrl || '');
 
   const createRecipe = useMutation(api.recipes.createRecipe);
   const updateRecipe = useMutation(api.recipes.updateRecipe);

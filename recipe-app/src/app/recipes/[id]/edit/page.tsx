@@ -22,7 +22,7 @@ export default function EditRecipePage() {
           title: recipe.title,
           ingredients: recipe.ingredients,
           instructions: recipe.instructions,
-          imageUrl: recipe.imageUrl,
+          imageUrl: recipe.imageUrl!,
           rating: recipe.rating,
         }}
         onSuccess={() => window.location.href = '/recipes'}
