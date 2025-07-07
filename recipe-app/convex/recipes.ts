@@ -1,4 +1,5 @@
 import { mutation, query } from "./_generated/server";
+import { Id } from "./_generated/dataModel";
 import { v } from "convex/values";
 
 export const createRecipe = mutation({
@@ -15,7 +16,21 @@ export const createRecipe = mutation({
 });
 
 export const getRecipes = query(async (ctx) => {
-  return await ctx.db.query("recipes").collect();
+  try {
+    const recipes = await ctx.db.query('recipes').collect();
+
+    return await Promise.all(
+      recipes.map(async (recipe) => ({
+        ...recipe,
+        imageUrl: recipe.imageUrl
+          ? await ctx.storage.getUrl(recipe.imageUrl as Id<"_storage">)
+          : null,
+      }))
+    );
+  } catch (error) {
+    console.error('Error in getRecipes:', error);
+    throw error;
+  }
 });
 
 export const updateRecipe = mutation({
