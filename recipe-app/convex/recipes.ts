@@ -8,7 +8,7 @@ export const createRecipe = mutation({
     ingredients: v.string(),
     instructions: v.string(),
     rating: v.number(),
-    imageUrl: v.optional(v.string()),
+    imageUrl: v.optional(v.id("_storage")),
   },
   handler: async (ctx, args) => {
     await ctx.db.insert("recipes", args);
@@ -17,7 +17,7 @@ export const createRecipe = mutation({
 
 export const getRecipes = query(async (ctx) => {
   try {
-    const recipes = await ctx.db.query('recipes').collect();
+    const recipes = await ctx.db.query("recipes").collect();
 
     return await Promise.all(
       recipes.map(async (recipe) => ({
@@ -28,7 +28,7 @@ export const getRecipes = query(async (ctx) => {
       }))
     );
   } catch (error) {
-    console.error('Error in getRecipes:', error);
+    console.error("Error in getRecipes:", error);
     throw error;
   }
 });
@@ -40,16 +40,27 @@ export const updateRecipe = mutation({
     ingredients: v.string(),
     instructions: v.string(),
     rating: v.number(),
-    imageUrl: v.optional(v.string()),
+    imageUrl: v.optional(v.union(v.id("_storage"), v.null())),
   },
   handler: async (ctx, { id, ...rest }) => {
-    await ctx.db.patch(id, rest);
+    const oldRecipe = await ctx.db.get(id);
+    if (oldRecipe?.imageUrl && oldRecipe.imageUrl !== rest.imageUrl) {
+      await ctx.storage.delete(oldRecipe.imageUrl as Id<"_storage">);
+    }
+    await ctx.db.patch(id, {
+      ...rest,
+      imageUrl: rest.imageUrl ?? undefined, // Replace null with undefined
+    });
   },
 });
 
 export const deleteRecipe = mutation({
   args: { id: v.id("recipes") },
   handler: async (ctx, { id }) => {
+    const recipe = await ctx.db.get(id);
+    if (recipe?.imageUrl) {
+      await ctx.storage.delete(recipe.imageUrl as Id<"_storage">);
+    }
     await ctx.db.delete(id);
   },
 });

@@ -3,8 +3,7 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import ImageFromStorage from './ImageFromStorage';
-import Image from 'next/image';
+// import Image from 'next/image';
 
 
 interface RecipeCardProps {
@@ -28,18 +27,13 @@ export default function RecipeCard({ recipe, onDelete }: RecipeCardProps) {
       <h2 className="text-2xl font-bold text-[color:var(--color-accent)] mb-3">{recipe.title}</h2>
 
       {recipe.imageUrl && (
-        <ImageFromStorage
-          storageId={recipe.imageUrl}
+        <img
+          src={recipe.imageUrl}
           alt={recipe.title}
           className="rounded-md w-full h-48 object-cover mb-4 border border-[color:var(--color-secondary)]"
+          height="300"
+          width="auto"
         />
-        // <img
-        //   src={recipe.imageUrl}
-        //   alt={recipe.title}
-        //   className="w-full h-48 object-cover rounded-xl border border-[color:var(--color-secondary)]"
-        //   height="300"
-        //   style={{ width: "auto" }}
-        // />
       )}
 
       <p className="text-sm text-[color:var(--color-text)] text-opacity-80 mb-2">
