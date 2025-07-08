@@ -10,7 +10,13 @@ Designed with a dark, modern interface and deployed using Vercel and Convex Clou
 
 - Add, edit, and delete recipes
 - Upload and display recipe images via Convex storage
-- Dark mode first, with accessible and responsive UI
+- Dark theme UI with color palette:
+  - **Jet Black** `#121212` background
+  - **Ivory** `#F5F5F5` text highlights
+  - **Chocolate Brown** `#4E342E` accents
+  - **Burgundy** `#8E3B46` for interactive elements
+  - **Gold** `#FFD700` for subtle highlights and ratings
+- Minimalist, responsive layout with accessible contrast
 - Deployed frontend (Vercel) and backend (Convex Cloud)
 
 ---
