@@ -61,11 +61,12 @@ npm run dev
 
 The app will be available at `http://localhost:3000`.
 
+---
 
 ## Live Deployment
 
-- Recipe App (Vercel): [Vercel](https://recipe-app-azure-eta.vercel.app/)  
-- Database (Convex Cloud): [Convex Cloud](https://brilliant-butterfly-790.convex.cloud)
+- Recipe App (Vercel): [https://recipe-app-azure-eta.vercel.app/](https://recipe-app-azure-eta.vercel.app/)  
+- Database (Convex Cloud): [https://brilliant-butterfly-790.convex.cloud](https://brilliant-butterfly-790.convex.cloud)
 
 ---
 
