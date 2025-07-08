@@ -83,7 +83,7 @@ This project was an insightful dive into using Convex with Next.js 15. While the
 ### Challenges & Solutions
 
 - **Serving images from Convex**  
-  I initially tried the HTTP request strategy listed in the Convex docs to fetch and render images using `/getImage?storageId=...`. It worked but was overly complex. Eventually, I switched to using `ctx.storage.getUrl()` inside my query, which is the simpler and more recommended method. This made image rendering seamless.
+  I initially tried the HTTP request strategy listed in the Convex docs to fetch and render images using `/getImage?storageId=...`. It was over complicating things and thus more bugs. Eventually, I switched to using `ctx.storage.getUrl()` inside my query, making image rendering a lot easier.
 
 - **Non-image recipes**  
   Ensuring the app didn’t break when users submitted a recipe without an image was a simple fix — I just allowed `imageUrl` to be `null` using `v.optional(v.union(v.id("_storage"), v.null()))`.
@@ -95,7 +95,7 @@ This project was an insightful dive into using Convex with Next.js 15. While the
   I ran into a few `ArgumentValidationError` issues due to mismatched validators between `schema.ts` and the mutation args. Aligning the validators to allow for optional/null image IDs resolved this.
 
 - **Next.js image rendering**  
-  For `next/image` or `<img>` to work, I had to explicitly add Convex’s cloud domain to the `next.config.js` under `images.domains`.
+  For `next/image` to work, I had to explicitly add Convex’s cloud domain to the `next.config.js` under `images.domains`, so I stuck to using <img>.
 
 ### What I Learned
 
